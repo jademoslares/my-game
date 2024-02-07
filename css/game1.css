@@ -1,14 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Honk&display=swap");
+/* font-family: 'Honk', system-ui;*/
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+/* font-family: 'Nanum Pen Script', cursive; */
+
 #board {
   height: 600px;
   width: 60%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  background-color: rgba(131, 131, 131, 0.8);;
+  background-color: rgba(240, 230, 247, 0.8);;
   border: 2px solid black;
   border-radius: 10px;
 }
 
 .alien {
   height: 25%;
+}
+
+h2{
+  font-family: "Honk", system-ui;
+  font-size: 100px;
+  margin: auto;
+}
+#top-info{
+  width: 60%;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 60px;
+  margin: auto;
+}
+#top-info p{
+  margin: auto;
+  text-align: left;
+  display: block;
+}
+#top-info span{
+  display:block;
+  float:right;
+}
+
+#bottom-info{
+
 }

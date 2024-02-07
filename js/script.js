@@ -15,12 +15,13 @@ let board = [];
 let rows = 4;
 let columns = 5;
 let firstChoice, secondChoice;
-
 let cardSet; //holder of current game cards
 let time = 0;
 let guess = 5;
 let numMatchToWin = 0;
 let userMatch = 0;
+let level = 1;
+let enemiesRemaining = 0;
 
 window.onload = function () {
   render();
@@ -28,9 +29,10 @@ window.onload = function () {
 function render() {
   shuffleCards();
   startGame();
-  console.log("javascript is ok");
+  gameInfo();
 }
 function shuffleCards() {
+  enemiesRemaining = 10;
   cardSet = enemies.concat(enemies);
 
   for (let i = 0; i < cardSet.length; i++) {
@@ -49,19 +51,17 @@ function startGame() {
       let hiddenImg = cardSet.pop();
       row.push(hiddenImg);
 
-      let card = document.createElement("img");
-      card.id = r.toString() + "-" + c.toString();
-      card.src = "/img/enemies/" + hiddenImg + ".png";
-      card.classList.add("alien");
-      card.addEventListener("click", selectCard);
-      card.style.width = 100/columns +"%";
-      card.style.height = 100/row +"%";
-      document.getElementById("board").append(card);
+      let cardEls = document.createElement("img");
+      cardEls.id = r.toString() + "-" + c.toString();
+      cardEls.src = "/img/enemies/" + hiddenImg + ".png";
+      cardEls.classList.add("alien");
+      cardEls.addEventListener("click", selectCard);
+      cardEls.style.width = 100 / columns + "%";
+      cardEls.style.height = 100 / row + "%";
+      document.getElementById("board").append(cardEls);
     }
     board.push(row);
   }
-  const alienEls = document.querySelector(".alien");
-  alienEls.style
   //const boardEls = document.getElementById("board");
   //   boardEls.addEventListener("click",(event =>{
   //     if(event.target.tagName ==="IMG"){
@@ -72,12 +72,22 @@ function startGame() {
   setTimeout(hideCards, 1000);
 }
 
+function gameInfo() {
+  let gameTopEls = document.querySelector("#top-info");
+  gameTopEls.innerHTML = `<h2>Memory Train</h2>
+  <p>Level ${level} <span>Lives ${guess} Time ${time}</span></p>`;
+
+  let gameBottomEls = document.querySelector("#bottom-info");
+}
+
 function hideCards() {
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < columns; c++) {
-      let card = document.getElementById(r.toString() + "-" + c.toString());
+      let backCardEls = document.getElementById(
+        r.toString() + "-" + c.toString()
+      );
       let x = Math.floor(Math.random() * 6);
-      card.src = "/img/holder/holder" + x.toString()+".png";
+      backCardEls.src = "/img/holder/holder" + x.toString() + ".png";
     }
   }
 }
@@ -109,8 +119,8 @@ function update() {
   //card choices checker
   if (firstChoice.src != secondChoice.src) {
     let x = Math.floor(Math.random() * 6);
-    firstChoice.src = "/img/holder/holder" + x.toString()+".png";
-    secondChoice.src = "/img/holder/holder" + x.toString()+".png";
+    firstChoice.src = "/img/holder/holder" + x.toString() + ".png";
+    secondChoice.src = "/img/holder/holder" + x.toString() + ".png";
 
     guess -= 1;
   }
