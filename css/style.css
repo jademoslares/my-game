@@ -11,6 +11,14 @@
   text-align: center;
   color: white;
 }
+#game{
+  background: url(/img/bg3.gif);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  text-align: center;
+  color: white;
+}
 button {
   background-color: #ffffff;
   border-radius: 40em;

@@ -1,19 +1,19 @@
 //variables
 const enemies = [
-  alien1,
-  alien2,
-  alien3,
-  alien4,
-  alien5,
-  alien6,
-  alien7,
-  alien8,
-  alien9,
-  alien10,
+  "alien1",
+  "alien2",
+  "alien3",
+  "alien4",
+  "alien5",
+  "alien6",
+  "alien7",
+  "alien8",
+  "alien9",
+  "alien10",
 ];
 let board = [];
-let rows = 3;
-let columns = 10;
+let rows = 4;
+let columns = 5;
 let firstChoice, secondChoice;
 
 let cardSet; //holder of current game cards
@@ -22,9 +22,13 @@ let guess = 5;
 let numMatchToWin = 0;
 let userMatch = 0;
 
+window.onload = function () {
+  render();
+};
 function render() {
   shuffleCards();
   startGame();
+  console.log("javascript is ok");
 }
 function shuffleCards() {
   cardSet = enemies.concat(enemies);
@@ -47,16 +51,18 @@ function startGame() {
 
       let card = document.createElement("img");
       card.id = r.toString() + "-" + c.toString();
-      card.src = "/enemies/" + hiddenImg + ".png";
-      card.classList.add("card");
+      card.src = "/img/enemies/" + hiddenImg + ".png";
+      card.classList.add("alien");
       card.addEventListener("click", selectCard);
+      card.style.width = 100/columns +"%";
+      card.style.height = 100/row +"%";
       document.getElementById("board").append(card);
     }
     board.push(row);
   }
-
-  const boardEls = document.getElementById("board");
-
+  const alienEls = document.querySelector(".alien");
+  alienEls.style
+  //const boardEls = document.getElementById("board");
   //   boardEls.addEventListener("click",(event =>{
   //     if(event.target.tagName ==="IMG"){
   //         selectCard();
@@ -71,7 +77,7 @@ function hideCards() {
     for (let c = 0; c < columns; c++) {
       let card = document.getElementById(r.toString() + "-" + c.toString());
       let x = Math.floor(Math.random() * 6);
-      card.src = "/holder/holder" + x.toString();
+      card.src = "/img/holder/holder" + x.toString()+".png";
     }
   }
 }
@@ -85,7 +91,7 @@ function selectCard() {
       let i = parseInt(cardID[0]);
       let d = parseInt(cardID[1]);
 
-      firstChoice.src = board[i][d] + ".png";
+      firstChoice.src = "/img/enemies/" + board[i][d] + ".png";
     } else if (!secondChoice && this != firstChoice) {
       secondChoice = this;
 
@@ -93,7 +99,7 @@ function selectCard() {
       let i = parseInt(cardID[0]);
       let d = parseInt(cardID[1]);
 
-      secondChoice.src = board[i][d] + ".png";
+      secondChoice.src = "/img/enemies/" + board[i][d] + ".png";
       setTimeout(update, 1000);
     }
   }
@@ -102,8 +108,9 @@ function selectCard() {
 function update() {
   //card choices checker
   if (firstChoice.src != secondChoice.src) {
-    firstChoice.src = "";
-    secondChoice.src = "";
+    let x = Math.floor(Math.random() * 6);
+    firstChoice.src = "/img/holder/holder" + x.toString()+".png";
+    secondChoice.src = "/img/holder/holder" + x.toString()+".png";
 
     guess -= 1;
   }
