@@ -73,6 +73,7 @@ function startGame() {
       cardEls.addEventListener("click", selectCard);
       cardEls.style.width = 100 / columns + "%";
       cardEls.style.height = 100 / rows + "%";
+
       boardEls.append(cardEls);
     }
     board.push(row);
@@ -145,48 +146,46 @@ function checkWinner() {
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Times Up! Better Luck next time!";
     modalEls.style.display = "block";
-    btnEls.innerHTML ="Restart";
+    btnEls.innerHTML = "Restart";
   } else if (guess === 0) {
     isWinner = false;
     isTimerRunning = false;
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Nice Try! You lose!";
     modalEls.style.display = "block";
-    btnEls.innerHTML ="Restart";
+    btnEls.innerHTML = "Restart";
   } else if (enemiesRemaining === 0 && level != 5) {
     isWinner = true;
     isTimerRunning = false;
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Congratulations! You won!";
     modalEls.style.display = "block";
-    btnEls.innerHTML ="Next Level";
-  }else if(enemiesRemaining === 0 && level === 5){
+    btnEls.innerHTML = "Next Level";
+  } else if (enemiesRemaining === 0 && level === 5) {
     isWinner = true;
     isTimerRunning = false;
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Congratulations! You beat the game!";
     modalEls.style.display = "block";
-    btnEls.innerHTML ="Play Again";
+    btnEls.innerHTML = "Play Again";
   }
 }
 btnEls.onclick = function () {
-  if(isWinner === true){
-    if (level === 5){
+  if (isWinner) {
+    if (level === 5) {
       level = 1;
       updateGame();
-    }else{
+    } else {
       level += 1;
       updateGame();
     }
-    
-  }else if(isWinner === false){
+  } else if (!isWinner) {
     level = 1;
     updateGame();
   }
-  
 };
 
-function updateGame(){
+function updateGame() {
   modalEls.style.display = "none";
   boardEls.classList.remove("disabled");
   board = [];
@@ -200,15 +199,13 @@ function updateGame(){
   render();
 }
 
-
-
 function empty(element) {
   while (element.firstElementChild) {
     element.firstElementChild.remove();
   }
 }
 function gameTimeCountdown() {
-  if(!isTimerRunning)return;
+  if (!isTimerRunning) return;
   if (gameTime != 0) {
     gameTime -= 1;
     gameInfo();
