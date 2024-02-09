@@ -1,41 +1,55 @@
 //variables
 const boardEls = document.getElementById("board");
 const modalEls = document.getElementById("myModal");
-const btnRestartEls = document.getElementsByClassName("btnRestart")[0];
+const btnEls = document.getElementsByClassName("btnGame1")[0];
 const gameMessageEls = document.getElementById("game-message");
-const enemies = [
-  "alien1",
-  "alien2",
-  "alien3",
-  "alien4",
-  "alien5",
-  "alien6",
-  "alien7",
-  "alien8",
-  "alien9",
-  "alien10",
-];
+let enemies = [];
 let board = [];
 let rows = 4;
 let columns = 5;
 let firstChoice, secondChoice;
 let cardSet; //holder of current game cards
 let gameTime = 60;
+let isTimerRunning;
 let guess = 10;
 let level = 1;
-let enemiesRemaining = 10;
+let enemiesRemaining;
 let isWinner;
 
 function render() {
   shuffleCards();
   startGame();
   gameInfo();
+  isTimerRunning = true;
   setTimeout(gameTimeCountdown, 1500);
 }
 function shuffleCards() {
-  enemiesRemaining = 10;
-  cardSet = enemies.concat(enemies);
+  if (level === 1) {
+    columns = 3;
+    rows = 2;
+    enemiesRemaining = 3;
+  } else if (level === 2) {
+    columns = 4;
+    rows = 2;
+    enemiesRemaining = 4;
+  } else if (level === 3) {
+    columns = 4;
+    rows = 3;
+    enemiesRemaining = 6;
+  } else if (level === 4) {
+    columns = 4;
+    rows = 4;
+    enemiesRemaining = 8;
+  } else if (level === 5) {
+    columns = 5;
+    rows = 4;
+    enemiesRemaining = 10;
+  }
 
+  for (let i = 1; i <= enemiesRemaining; i++) {
+    enemies.push("alien" + i);
+  }
+  cardSet = enemies.concat(enemies);
   for (let i = 0; i < cardSet.length; i++) {
     let x = Math.floor(Math.random() * cardSet.length);
 
@@ -71,8 +85,6 @@ function gameInfo() {
   let gameTopEls = document.querySelector("#top-info");
   gameTopEls.innerHTML = `<h2>Memory Train</h2>
   <p>Level ${level} <span>Lives ${guess} Time ${gameTime}</span></p>`;
-
-  let gameBottomEls = document.querySelector("#bottom-info");
 }
 
 function hideCards() {
@@ -129,49 +141,78 @@ function update() {
 function checkWinner() {
   if (gameTime === 0) {
     isWinner = false;
+    isTimerRunning = false;
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Times Up! Better Luck next time!";
     modalEls.style.display = "block";
+    btnEls.innerHTML ="Restart";
   } else if (guess === 0) {
     isWinner = false;
+    isTimerRunning = false;
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Nice Try! You lose!";
     modalEls.style.display = "block";
-  } else if (enemiesRemaining === 0) {
+    btnEls.innerHTML ="Restart";
+  } else if (enemiesRemaining === 0 && level != 5) {
     isWinner = true;
+    isTimerRunning = false;
     boardEls.classList.add("disabled");
     gameMessageEls.innerHTML = "Congratulations! You won!";
     modalEls.style.display = "block";
+    btnEls.innerHTML ="Next Level";
+  }else if(enemiesRemaining === 0 && level === 5){
+    isWinner = true;
+    isTimerRunning = false;
+    boardEls.classList.add("disabled");
+    gameMessageEls.innerHTML = "Congratulations! You beat the game!";
+    modalEls.style.display = "block";
+    btnEls.innerHTML ="Play Again";
   }
 }
-btnRestartEls.onclick = function () {
-  debugger;
+btnEls.onclick = function () {
+  if(isWinner === true){
+    if (level === 5){
+      level = 1;
+      updateGame();
+    }else{
+      level += 1;
+      updateGame();
+    }
+    
+  }else if(isWinner === false){
+    level = 1;
+    updateGame();
+  }
+  
+};
+
+function updateGame(){
   modalEls.style.display = "none";
   boardEls.classList.remove("disabled");
   board = [];
-  rows = 4;
-  columns = 5;
-  firstChoice =null;
+  enemies = [];
+  firstChoice = null;
   secondChoice = null;
-  cardSet = [];
   gameTime = 60;
   guess = 10;
-  level = 1;
-  enemiesRemaining = 10;
-  isWinner;
+  isWinner = null;
   empty(boardEls);
   render();
-};
-function empty(element){
-  while(element.firstElementChild){
+}
+
+
+
+function empty(element) {
+  while (element.firstElementChild) {
     element.firstElementChild.remove();
   }
 }
 function gameTimeCountdown() {
+  if(!isTimerRunning)return;
   if (gameTime != 0) {
     gameTime -= 1;
     gameInfo();
-    setTimeout(gameTimeCountdown, 1000);
+    setTimeout(gameTimeCountdown, 1500);
   } else {
     checkWinner();
   }

@@ -14,10 +14,6 @@
   border-radius: 10px;
 }
 
-.alien {
-  /* height: 25%; */
-}
-
 h2 {
   font-family: "Honk", system-ui;
   font-size: 100px;
@@ -70,7 +66,7 @@ h2 {
 }
 
 /* CSS */
-.btnRestart,.btnRestart:after {
+.btnGame1,.btnGame1:after {
   width: 150px;
   height: 76px;
   line-height: 78px;
@@ -88,7 +84,7 @@ h2 {
   touch-action: manipulation;
 }
 
-.btnRestart:after {
+.btnGame1:after {
   --slice-0: inset(50% 50% 50% 50%);
   --slice-1: inset(80% -6px 0 0);
   --slice-2: inset(50% -6px 30% 0);
@@ -108,7 +104,7 @@ h2 {
   clip-path: var(--slice-0);
 }
 
-.btnRestart:hover:after {
+.btnGame1:hover:after {
   animation: 1s glitch;
   animation-timing-function: steps(2, end);
 }
