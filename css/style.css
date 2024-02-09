@@ -19,7 +19,7 @@
   text-align: center;
   color: white;
 }
-button {
+.btnDefault {
   background-color: #ffffff;
   border-radius: 40em;
   border-style: none;
