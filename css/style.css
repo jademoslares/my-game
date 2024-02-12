@@ -4,7 +4,7 @@
 /* font-family: 'Nanum Pen Script', cursive; */
 
 #mainScreen {
-  background: url(/img/bg.gif);
+  background: url(../img/bg.gif);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -12,7 +12,7 @@
   color: white;
 }
 #game{
-  background: url(/img/bg3.gif);
+  background: url(../img/bg3.gif);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
